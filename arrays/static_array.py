@@ -1,5 +1,5 @@
 from array import array
-from errors import IndexOverFlowException
+from .errors import IndexOverFlowException
 
 class StaticArray:
 

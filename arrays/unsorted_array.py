@@ -1,7 +1,7 @@
-from array_ops import ArrayOpsInterface
-from static_array import StaticArray
+from .array_ops import ArrayOpsInterface
+from .static_array import StaticArray
 from typing import Any
-from errors import SpaceOverFlowException, IndexOverFlowException
+from .errors import SpaceOverFlowException, IndexOverFlowException
 
 class UnsortedArray(ArrayOpsInterface):
 

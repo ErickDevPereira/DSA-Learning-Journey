@@ -1,8 +1,7 @@
-from array_ops import ArrayOpsInterface
-from static_array import StaticArray
-from errors import IndexOverFlowException, SpaceOverFlowException
-from typing import Any
-
+from .array_ops import ArrayOpsInterface
+from .static_array import StaticArray
+from .errors import IndexOverFlowException, SpaceOverFlowException
+from typing import Any, Callable
 
 class SortedArray(ArrayOpsInterface):
 
@@ -62,7 +61,7 @@ class SortedArray(ArrayOpsInterface):
         self.__size += 1
     
     def remove(self, val: Any) -> None:
-        self.__id: int | None = self.linear_search(val)
+        self.__id: int | None = self.binary_search(val)
         if self.__id is None:
             return #Cancel the operation because there is nothing to remove
         for _ in range(self.__id, self.__size - 1):
@@ -75,16 +74,21 @@ class SortedArray(ArrayOpsInterface):
                 return None #The index doesn't exist because val surpass the item value.
             if self.__arr[ind] == val:
                 return ind #We got the index
-
-if __name__ == "__main__":
-    arr = SortedArray(10)
-    arr.insert(1)
-    arr.insert(-1)
-    arr.insert(-2)
-    arr.insert(10)
-    arr.insert(2)
-    arr.insert(2)
-    print(arr)
-    arr.remove(2)
-    arr.remove(-1)
-    print(arr)
+    
+    def traverse(self, callback: Callable[[Any], None]) -> None:
+        for _ in range(self.__size):
+            callback(self.__arr[_])
+    
+    def binary_search(self, target: Any) -> int | None:
+        left: int = 0
+        right: int = self.__size - 1
+        while left <= right:
+            mid_ind: int = (right + left) // 2
+            mid_val: Any = self.__arr[mid_ind]
+            if mid_val < target:
+                left = mid_ind + 1
+            elif mid_val > target:
+                right = mid_ind - 1
+            else:
+                return mid_ind #We've got the value
+        return None #If we get to this point, it means that we can't find such value inside the array.
