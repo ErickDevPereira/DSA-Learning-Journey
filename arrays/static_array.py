@@ -1,11 +1,12 @@
 from array import array
-from errors import OverFlowException
+from errors import IndexOverFlowException
 
 class StaticArray:
 
     def __init__(self, size: int, type: str = 'l'):
         #Setting the standard value for the entries of an empty array
-        match(type):
+        self.__type = type
+        match(self.__type):
             case 'u' | 'w':
                 self.__init_val: str = " "
             case 'd' | 'f':
@@ -19,7 +20,7 @@ class StaticArray:
     def __len__(self) -> int:
         return self.__size
     
-    def __getitem__(self, index: int) -> None:
+    def __getitem__(self, index: int) -> int | float | str:
         self.__checker(index)#Checking the indexes
         return self.__arr[index]
     
@@ -36,4 +37,22 @@ class StaticArray:
     
     def __checker(self, index: int) -> None:
         if index < 0 or index > self.__size - 1:
-            raise OverFlowException(range = (0, self.__size))
+            raise IndexOverFlowException(range = (0, self.__size))
+        
+    def get_bytes(self) -> int:
+        self._space: int = 0
+        match(self.__type):
+            case "l" | "L" | "f":
+                self._space += 4
+            case "b" | "B":
+                self._space += 1
+            case "u" | "h" | "H" | "i" | "I":
+                self._space += 2
+            case "d" | "Q" | "q":
+                self._space += 8
+        self.__tot_space: int = self._space * self.__size
+        return f"{self.__tot_space} bytes"
+
+if __name__ == "__main__":
+    arr = StaticArray(100)
+    print(arr.get_bytes())
