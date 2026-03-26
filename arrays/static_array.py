@@ -37,7 +37,7 @@ class StaticArray:
     
     def __checker(self, index: int) -> None:
         if index < 0 or index > self.__size - 1:
-            raise IndexOverFlowException(range = (0, self.__size))
+            raise IndexOverFlowException(range = (0, self.__size - 1))
         
     def get_bytes(self) -> int:
         self._space: int = 0
