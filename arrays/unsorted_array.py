@@ -53,15 +53,3 @@ class UnsortedArray(ArrayOpsInterface):
             #Swapping the last element by this one without really taking it out, but it will be considered as out of the array because we decrease the size of it.
             self.__arr[index] = self.__arr[self.__size - 1]
             self.__size -= 1 #Reducing the size
-
-if __name__ == "__main__":
-    arr = UnsortedArray(2)
-    arr.insert(2)
-    arr.insert(3)
-    arr.insert(4)
-    arr.insert(-1)
-    arr.insert(0)
-    arr.insert(0)
-    arr.insert(-1)
-    print(arr)
-    print(arr.linear_search(-1))

@@ -52,7 +52,3 @@ class StaticArray:
                 self._space += 8
         self.__tot_space: int = self._space * self.__size
         return f"{self.__tot_space} bytes"
-
-if __name__ == "__main__":
-    arr = StaticArray(100)
-    print(arr.get_bytes())
